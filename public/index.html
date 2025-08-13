@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Congress of Dentistry 2025 - Checkout</title>
+  <script src="https://js.stripe.com/v3/"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f4f7;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      display: flex;
+      max-width: 1100px;
+      margin: 40px auto;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .form-section {
+      flex: 1;
+      padding: 40px;
+    }
+
+    .summary-section {
+      width: 350px;
+      background-color: #eef2ff;
+      padding: 40px 30px;
+      color: #1e293b;
+    }
+
+    .summary-section img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .summary-section h3 {
+      margin-top: 0;
+      font-size: 20px;
+    }
+
+    .summary-section p {
+      margin: 6px 0;
+      font-size: 14px;
+    }
+
+    .ticket-note {
+      margin-top: 20px;
+      padding: 12px;
+      background-color: #c7d2fe;
+      border-left: 5px solid #6366f1;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 26px;
+      color: #1f2937;
+    }
+
+    label {
+      display: block;
+      margin: 12px 0 5px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #cbd5e1;
+      margin-bottom: 14px;
+      font-size: 15px;
+    }
+
+    #card-element {
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 5px;
+      background: #fff;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background: #4f46e5;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    #error-message {
+      color: red;
+      margin-top: 10px;
+    }
+
+    .ticket-block {
+      border: 1px dashed #ccc;
+      border-radius: 6px;
+      padding: 10px;
+      background-color: #f8fafc;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Left: Form -->
+    <div class="form-section">
+      <h2>Buy Tickets</h2>
+    <div id="countdown-box" style="background:#fef3c7; border-left:5px solid #f59e0b; padding:10px 15px; margin-bottom:20px; border-radius:6px; font-size:14px;">
+  ⏱ <strong>Your reservation will expire in:</strong> <span id="countdown">15:00</span>
+    </div>
+
+      <form id="payment-form">
+        <label>Email</label>
+        <input name="buyerEmail" type="email" placeholder="Enter your email" required />
+
+        <label>Confirm Email</label>
+        <input name="buyerEmailConfirm" type="email" placeholder="Enter your email again" required />
+
+        <label>Full Name</label>
+        <input name="buyerName" placeholder="Enter your full name" required />
+	<label>Coupon Code: <input name="couponCode" id="couponCode" placeholder="Enter coupon (optional)" /></label><br><br>
+
+        <label>Phone Number</label>
+        <input type="tel" placeholder="+1 (201) 555-0123" required />
+
+        <label>Address</label>
+        <input type="text" placeholder="Street and house number" required />
+
+        <label>Address Line 2 (optional)</label>
+        <input type="text" placeholder="Apartment, suite, etc." />
+
+        <label>ZIP Code</label>
+        <input type="text" placeholder="ZIP Code" required />
+
+        <label>City</label>
+        <input type="text" placeholder="Enter your city" required />
+
+        <label>State</label>
+        <input type="text" placeholder="Enter your state" required />
+
+        <label>How many tickets?</label>
+        <select id="ticketQuantity">
+          <option value="1">1 Ticket</option>
+          <option value="2">2 Tickets</option>
+          <option value="3">3 Tickets</option>
+        </select>
+
+        <div id="ticketHolders"></div>
+
+        <!-- Price breakdown -->
+	<div id="price-breakdown" style="margin-top: 20px; font-size: 16px;">
+  	 <strong>Total:</strong> $1099.00
+	</div>
+	<label>Card Details</label>
+        <div id="card-element"></div>
+
+        <button type="submit">Buy Now</button>
+        <div id="error-message"></div>
+  	<div id="error-message"></div>
+
+  	<div style="margin-top: 30px; font-size: 14px; text-align: center;">
+    	  <a href="mailto:web@institutodanielzabaleta.com" style="color: #2563eb; text-decoration: underline;">
+      Have questions about your purchase? Contact us.
+    </a>
+      </div>
+      </form>
+    </div>
+
+    <!-- Right: Summary -->
+    <div class="summary-section">
+      <img src="CODlogo.jpg" alt="Congress of Dentistry Logo" />
+      <h3>Diamond Ticket – Congress of Dentistry 2025</h3>
+      <p>🎟 <strong>Ticket:</strong> $1099.00</p>
+      <p>🗓 <strong>Event:</strong><br>October 2–4, 2025<br>6:00 AM – 8:00 PM</p>
+      <p>📍 <strong>Location:</strong><br>
+        Centro de convenciones Puerta de Oro,<br>
+        Via 40 # 79B-06, Barranquilla,<br>
+        Colombia</p>
+      <div class="ticket-note">
+        ⚠️ Tickets are non-transferable after validation.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const stripe = Stripe("pk_live_51RYUqME2w24gItNkV6qMGp2vXF9lWCVzzL8vA5sCkLeEbtLqR1D11e6XFmJUo9FhjeseElRYr7Fu0OLtns4kgleq00LCfClQJy"); 
+
+    const elements = stripe.elements();
+    const card = elements.create("card");
+    card.mount("#card-element");
+
+    const form = document.getElementById("payment-form");
+    const ticketHoldersDiv = document.getElementById("ticketHolders");
+    const quantitySelect = document.getElementById("ticketQuantity");
+
+    const couponInput = document.getElementById("couponCode");
+    const priceDiv = document.getElementById("price-breakdown");
+
+    const basePrice = 1099.00; // USD
+    const coupons = {
+      COD20: 0.20,
+      COD30: 0.30
+};
+
+function updatePrice() {
+  const qty = Number(quantitySelect.value);
+  const code = couponInput.value.trim().toUpperCase();
+  const discount = coupons[code] || 0;
+
+  const subtotal = basePrice * qty;
+  const discountAmount = subtotal * discount;
+  const total = subtotal - discountAmount;
+
+  priceDiv.innerHTML = `
+    <strong>Subtotal:</strong> $${subtotal.toFixed(2)}<br>
+    ${discount > 0 ? `<strong>Discount (${code}):</strong> -$${discountAmount.toFixed(2)}<br>` : ""}
+    <strong>Total:</strong> $${total.toFixed(2)}
+  `;
+}
+
+
+    function renderTicketFields(count) {
+      ticketHoldersDiv.innerHTML = "";
+      for (let i = 0; i < count; i++) {
+        ticketHoldersDiv.innerHTML += `
+          <div class="ticket-block">
+            <label>Participant ${i + 1} - Full Name</label>
+            <input name="ticketName${i}" required />
+            <label>Participant ${i + 1} - Email</label>
+            <input name="ticketEmail${i}" type="email" required />
+          </div>
+        `;
+      }
+    }
+
+    renderTicketFields(1);
+    quantitySelect.addEventListener("change", () => {
+      renderTicketFields(Number(quantitySelect.value));
+      updatePrice();
+    });
+    
+    couponInput.addEventListener("input", updatePrice);
+    updatePrice();
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const buyerEmail = form.buyerEmail.value;
+      const buyerEmailConfirm = form.buyerEmailConfirm.value;
+      const buyerName = form.buyerName.value;
+
+      if (buyerEmail !== buyerEmailConfirm) {
+        return document.getElementById("error-message").innerText = "Emails do not match.";
+      }
+
+      const ticketQty = Number(quantitySelect.value);
+      const tickets = [];
+
+      for (let i = 0; i < ticketQty; i++) {
+        tickets.push({
+          name: form[`ticketName${i}`].value,
+          email: form[`ticketEmail${i}`].value
+        });
+      }
+      const couponCode = document.getElementById("couponCode").value;
+      const res = await fetch("/create-payment-intent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ buyerName, buyerEmail, tickets, couponCode })
+      });
+
+      const { clientSecret, error } = await res.json();
+      if (error) {
+        return document.getElementById("error-message").innerText = error;
+      }
+
+      const result = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card,
+          billing_details: { name: buyerName, email: buyerEmail }
+        }
+      });
+
+      if (result.error) {
+        document.getElementById("error-message").innerText = result.error.message;
+      } else {
+        window.location.href = "/success";
+      }
+    });
+
+document.addEventListener("DOMContentLoaded", () => {
+  let countdownMinutes = 15;
+  let countdownSeconds = 0;
+
+  const countdownDisplay = document.getElementById("countdown");
+  const form = document.getElementById("payment-form");
+
+  const countdownInterval = setInterval(() => {
+    if (countdownSeconds === 0) {
+      if (countdownMinutes === 0) {
+        clearInterval(countdownInterval);
+        countdownDisplay.innerText = "Expired";
+        document.getElementById("countdown-box").innerHTML =
+          "⛔️ Your session has expired. Please refresh the page to start over.";
+        form.querySelectorAll("input, select, button").forEach((el) => (el.disabled = true));
+        return;
+      }
+      countdownMinutes--;
+      countdownSeconds = 59;
+    } else {
+      countdownSeconds--;
+    }
+
+    const mins = countdownMinutes.toString().padStart(2, "0");
+    const secs = countdownSeconds.toString().padStart(2, "0");
+    countdownDisplay.innerText = `${mins}:${secs}`;
+  }, 1000);
+});
+  </script>
+</body>
+</html>
